@@ -1,0 +1,210 @@
+Problem :-
+Convert infix expression to the postfix notation.
+Solution :-
+Postfix notation is also known as Reverse Polish Notation (RPN) in which every operator follows all of its operands. This notation is parenthesis free.
+For e.g, (A + B) is expressed as AB+ in postfix notation.
+We use the following straight-forward algorithm to convert infix expression to a postfix expression :-
+1) Scan the given expression from left to right.
+2) First operator seen is simply pushed onto stack.
+3) If we see an operand, append it to the postfix expression.
+4) If we see an operator (x) , pop off all the operators which are of lower precedence than 'x' and append them to the postfix expression. Then, push the operator 'x' onto stack.
+5) If we see an opening parenthesis, simply push it onto stack.
+6) If we see a closing parenthesis, pop off all elements from stack till opening parenthesis and append them to postfix expression except the opening & closing parenthesis.
+7) Finally, pop off all the elements (operators) from stack till it's empty and append them to
+postfix expression.
+Back | Next
+#include <iostream>
+#include <cstring>
+#include <stack>
+using namespace std;
+// get weight of operators as per precedence
+// higher weight given to operators with higher precedence
+// for non operators, return 0
+int getWeight( char ch) {
+switch (ch) {
+case '/' :
+case '*' : return 2 ;
+case '+' :
+case '-' : return 1 ;
+default : return 0;
+}
+}
+// convert infix expression to postfix using a stack
+void infix2postfix( char infix[], char postfix[], int size) {
+stack < char > s;
+int weight;
+int i = 0 ;
+int k = 0 ;
+char ch;
+// iterate over the infix expression
+while (i < size) {
+ch = infix[i];
+if (ch == '(') {
+// simply push the opening parenthesis
+s.push(ch);
+i ++ ;
+continue ;
+}
+if (ch == ')') {
+// if we see a closing parenthesis,
+// pop of all the elements and append it to
+// the postfix expression till we encounter
+// a opening parenthesis
+while ( !s.empty() && s.top() != '(') {
+postfix[k ++ ] = s.top();
+s.pop();
+}
+// pop off the opening parenthesis also
+if ( ! s.empty()) {
+s.pop();
+}
+i ++ ;
+continue ;
+}
+weight = getWeight(ch);
+if (weight == 0 ) {
+// we saw an operand
+// simply append it to postfix expression
+postfix[k ++ ] = ch;
+}
+else {
+// we saw an operator
+if (s.empty()) {
+// simply push the operator onto stack if
+// stack is empty
+s.push(ch);
+}
+else {
+// pop of all the operators from the stack and
+// append it to the postfix expression till we
+// see an operator with a lower precedence that
+// the current operator
+while ( ! s.empty() && s.top() != '(' &&
+weight <= getWeight(s.top())) {
+postfix[k ++ ] = s.top();
+s.pop();
+}
+// push the current operator onto stack
+s.push(ch);
+}
+}
+i ++ ;
+}
+// pop of the remaining operators present in the stack
+// and append it to postfix expression
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+# define MAX 20
+char str[MAX],stack[MAX];
+int top=-1;
+void push(char c)
+{
+stack[++top]=c;
+}
+char pop()
+{
+return stack[top--];
+}
+void post_in()
+{
+int i,n;
+char a,b,op;
+printf("Enter the postfix expression\n");
+gets(str);
+gets(str);
+n=strlen(str);
+for(i=0;i<MAX;i++)
+stack[i]=NULL;
+printf("Infix expression is:\t");
+printf("%c",str[0]);
+for(i=1;i<n;i++)
+{
+if(str[i]=='+'||str[i]=='-'||str[i]=='*'||str[i]=='/')
+{
+b=pop();
+//a=pop();
+op=str[i];
+printf("%c%c",op,b);
+}
+else
+{
+push(str[i]);
+}
+}
+printf("%c",str[top--]);
+}
+void post_pre()
+{
+int i,n;
+printf("Enter the postfix expression\n");
+gets(str);
+gets(str);
+n=strlen(str);
+printf("Prefix expression is:\t");
+for(i=n-1;i>=0;i--)
+printf("%c",str[i]);
+}
+void pre_in()
+{
+int n,i;
+char a,b,op;
+printf("Enter the prefix expression\n");
+gets(str);
+gets(str);
+n=strlen(str);
+for(i=0;i<MAX;i++)
+stack[i]=NULL;
+printf("Infix expression is:\t");
+for(i=0;i<n;i++)
+{
+if(str[i]=='+'||str[i]=='-'||str[i]=='*'||str[i]=='/')
+{
+push(str[i]);
+}
+else
+{
+op=pop();
+a=str[i];
+printf("%c%c",a,op);
+}
+}
+printf("%c",str[top--]);
+}
+void main()
+{
+int opt;
+clrscr();
+while(1)
+{
+printf("\n........MENU.......");
+printf("\n\t1.Postfix to Infix\n\t2.Postfix to Prefix\n\t3.Prefix to Infix\n\t4.Exit\n");
+scanf("%d",&opt);
+switch(opt)
+{
+case 1:post_in();break;
+case 2:post_pre();break;
+case 3:pre_in();break;
+case 4:exit();
+default:printf("Invalid choice");break;
+}
+}
+}

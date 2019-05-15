@@ -1,0 +1,369 @@
+In this post, we will see about PreOrder binary tree traversal in java.
+In PreOrder traversal,each node is processed before either of its sub-trees.In simpler words,Visit each node before its children.
+Steps for PreOrder traversal are:
+Visit the node.
+Traverse the left subtree in PreOrder.
+Traverse the right subtree in PreOrder.
+There can be two ways of implementing it
+Recursive
+Iterative
+Recursive solution:
+Recursive solution is very straight forward.Below diagram will make you understand recursion better.
+Code for recursion will be:
+public void preorder(TreeNode root) {     if(root !=  null) {    //Visit the node by Printing the node data       System.out.printf("%d ",root.data);       preorder(root.left);       preorder(root.right);     }   }
+Iterative solution:
+For recursion, we use implicit stack. So here to convert recursive solution to iterative, we will use explicit stack.
+Steps for iterative solution:
+1. Create empty stack and pust root node to it.
+2. Do the following when stack is not empty
+Pop a node from stack and print it
+Push right child of popped node to stack
+Push left child of popped node to stack
+We are pushing right child first, so it will be processed after left subtree as Stack is LIFO. public void preorderIter(TreeNode root) {          if(root == null)              return;          Stack<TreeNode> stack = new Stack<TreeNode>();          stack.push(root);          while(!stack.empty()){              TreeNode n = stack.pop();              System.out.printf("%d ",n.data);              if(n.right != null){                  stack.push(n.right);              }              if(n.left != null){                  stack.push(n.left);              }          }      }
+Example:
+Lets say your binary tree is :
+Lets create java program for PreOrder traversal: package org.arpit.java2blog;
+import java.util.Stack;
+public class BinaryTree {  public static class TreeNode  {   int data;   TreeNode left;   TreeNode right;   TreeNode(int data)   {    this.data=data;   }  }         // Recursive Solution  public void preorder(TreeNode root) {     if(root !=  null) {    //Visit the node-Printing the node data       System.out.printf("%d ",root.data);       preorder(root.left);       preorder(root.right);     }   }   // Iterative solution   public void preorderIter(TreeNode root) {          if(root == null)              return;          Stack<TreeNode> stack = new Stack<TreeNode>();          stack.push(root);          while(!stack.empty()){              TreeNode n = stack.pop();              System.out.printf("%d ",n.data);              if(n.right != null){                  stack.push(n.right);              }              if(n.left != null){                  stack.push(n.left);              }          }      }  public static void main(String[] args)  {   BinaryTree bi=new BinaryTree();   // Creating a binary tree   TreeNode rootNode=createBinaryTree();   System.out.println("Using Recursive solution:");   bi.preorder(rootNode);   System.out.println();   System.out.println("-------------------------");   System.out.println("Using Iterative solution:");   bi.preorderIter(rootNode);  }  public static TreeNode createBinaryTree()  {   TreeNode rootNode =new TreeNode(40);   TreeNode node20=new TreeNode(20);   TreeNode node10=new TreeNode(10);   TreeNode node30=new TreeNode(30);   TreeNode node60=new TreeNode(60);   TreeNode node50=new TreeNode(50);   TreeNode node70=new TreeNode(70);   rootNode.left=node20;   rootNode.right=node60;   node20.left=node10;   node20.right=node30;   node60.left=node50;   node60.right=node70;   return rootNode;  } }
+Run above program and you will get following output: Using Recursive solution: 40 20 10 30 60 50 70 ------------------------- Using Iterative solution: 40 20 10 30 60 50 70
+Please go through java interview programs for more such programs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JAVA.
+view plain print ?
+01. public class  BinaryTree {
+02.
+03.  BinaryTree left;
+04.  BinaryTree right;
+05. int  value;
+06.
+07. public  BinaryTree( int  v) {
+08.   value = v;
+09.  }
+10.
+11. // Insert a value into the tree
+12. public void  insert( int  v) {
+13. if (v < value) {
+14. if (left == null)
+15.     left = new  BinaryTree(v);
+16. else
+17.     left.insert(v);
+18.   }
+19.
+20. else if (v > value) {
+21. if (right == null)
+22.     right = new  BinaryTree(v);
+23. else
+24.     right.insert(v);
+25.   }
+26.  }
+27.
+28.
+29.
+30. public void  preorder() {
+31.   System.out.println(value);
+32. if (left != null ) left.preorder();
+33. if (right != null ) right.preorder();
+34.  }
+35.
+36.
+37.
+38.
+39. public void  inorder() {
+40. if (left != null ) left.inorder();
+41.   System.out.println(value);
+42. if (right != null ) right.inorder();
+43.  }
+44.
+45.
+46. public void  postorder() {
+47. if (left != null ) left.postorder();
+48. if (right != null ) right.postorder();
+49.   System.out.println(value);
+50.  }
+51.
+52.
+53.
+54.
+55. public static void  main(String args[])
+56.  {
+57.
+58.
+59.   BinaryTree b = new  BinaryTree( 50 );
+60.
+61.
+62.   b.insert( 20 );
+63.   b.insert( 40 );
+64.   b.insert( 10 );
+65.   b.insert( 5 );
+66.   b.insert( 45 );
+67.
+68.   b.insert( 70 );
+69.   b.insert( 60 );
+70.   b.insert( 80 );
+71.   b.insert( 55 );
+72.   b.insert( 85 );
+73.
+74.   System.out-print( "preorder traversal" + b.preorder());
+75.   System.out-print( "inorder traversal" +b.inorder());
+76.   System.out-print("postorder traversal" +b.postorder());
+77.
+78.
+79.  }
+80}
+81. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Inorder Traversal
+2. Preorder Traversal
+3. Postorder Traversal
+Inorder Traversal
+In this traversal the left sub tree of the given node is visited first, then the value at the given node is printed and then the right sub tree of the given node is visited. This process is applied recursively all the node in the tree until either the left sub tree is empty or the right sub tree is empty.
+Applying the Inorder traversal for the give example we get: 3, 10, 17, 25, 30, 32, 38, 40, 50, 78, 78, 93.
+/**
+ * Printing the contents of the tree in an inorder way.
+ */
+public void printInorder(){
+  printInOrderRec(root);
+  System.out.println("");
+}
+/**
+ * Helper method to recursively print the contents in an inorder way
+ */
+private void printInOrderRec(Node currRoot){
+  if ( currRoot == null ){
+    return;
+  }
+  printInOrderRec(currRoot.left);
+  System.out.print(currRoot.value+", ");
+  printInOrderRec(currRoot.right);
+}
+Preorder traversal
+In this traversal the value at the given node is printed first and then the left sub tree of the given node is visited and then the right sub tree of the given node is visited. This process is applied recursively all the node in the tree until either the left sub tree is empty or the right sub tree is empty.
+Applying the Preorder traversal for the give example we get: 40, 25, 10, 3, 17, 32, 30, 38, 78, 50, 78, 93.
+/**
+ * Printing the contents of the tree in a Preorder way.
+ */
+public void printPreorder() {
+  printPreOrderRec(root);
+  System.out.println("");
+}
+/**
+ * Helper method to recursively print the contents in a Preorder way
+ */
+private void printPreOrderRec(Node currRoot) {
+  if (currRoot == null) {
+    return;
+  }
+  System.out.print(currRoot.value + ", ");
+  printPreOrderRec(currRoot.left);
+  printPreOrderRec(currRoot.right);
+}
+Postorder Traversal
+In this traversal the left sub tree of the given node is traversed first, then the right sub tree of the given node is traversed and then the value at the given node is printed. This process is applied recursively all the node in the tree until either the left sub tree is empty or the right sub tree is empty.
+Applying the Postorder traversal for the give example we get: 3, 17, 10, 30, 38, 32, 25, 50, 93, 78, 78, 40.
+/**
+ * Printing the contents of the tree in a Postorder way.
+ */
+public void printPostorder() {
+  printPostOrderRec(root);
+  System.out.println("");
+}
+/**
+ * Helper method to recursively print the contents in a Postorder way
+ */
+private void printPostOrderRec(Node currRoot) {
+  if (currRoot == null) {
+    return;
+  }
+  printPostOrderRec(currRoot.left);
+  printPostOrderRec(currRoot.right);
+  System.out.print(currRoot.value + ", ");
+}
+The complete code which builds the tree for the example explained in this code and prints the maximum, minimum value, inorder traversal, preorder traversal and post order traversal can be found below:
+/**
+ * Represents a node in the Binary Search Tree.
+ */
+public class Node<T> {
+  //The value present in the node.
+  public int value;
+  //The reference to the left subtree.
+  public Node left;
+  //The reference to the right subtree.
+  public Node right;
+  public Node(int value) {
+    this.value = value;
+  }
+}
+/**
+ * Represents the Binary Search Tree.
+ */
+public class BinarySearchTree {
+  //Refrence for the root of the tree.
+  public Node root;
+  public BinarySearchTree insert(int value) {
+    Node node = new Node<>(value);
+    if (root == null) {
+      root = node;
+      return this;
+    }
+    insertRec(root, node);
+    return this;
+  }
+  private void insertRec(Node latestRoot, Node node) {
+    if (latestRoot.value > node.value) {
+      if (latestRoot.left == null) {
+        latestRoot.left = node;
+        return;
+      } else {
+        insertRec(latestRoot.left, node);
+      }
+    } else {
+      if (latestRoot.right == null) {
+        latestRoot.right = node;
+        return;
+      } else {
+        insertRec(latestRoot.right, node);
+      }
+    }
+  }
+  /**
+   * Returns the minimum value in the Binary Search Tree.
+   */
+  public int findMinimum() {
+    if (root == null) {
+      return 0;
+    }
+    Node currNode = root;
+    while (currNode.left != null) {
+      currNode = currNode.left;
+    }
+    return currNode.value;
+  }
+  /**
+   * Returns the maximum value in the Binary Search Tree
+   */
+  public int findMaximum() {
+    if (root == null) {
+      return 0;
+    }
+    Node currNode = root;
+    while (currNode.right != null) {
+      currNode = currNode.right;
+    }
+    return currNode.value;
+  }
+  /**
+   * Printing the contents of the tree in an inorder way.
+   */
+  public void printInorder() {
+    printInOrderRec(root);
+    System.out.println("");
+  }
+  /**
+   * Helper method to recursively print the contents in an inorder way
+   */
+  private void printInOrderRec(Node currRoot) {
+    if (currRoot == null) {
+      return;
+    }
+    printInOrderRec(currRoot.left);
+    System.out.print(currRoot.value + ", ");
+    printInOrderRec(currRoot.right);
+  }
+  /**
+   * Printing the contents of the tree in a Preorder way.
+   */
+  public void printPreorder() {
+    printPreOrderRec(root);
+    System.out.println("");
+  }
+  /**
+   * Helper method to recursively print the contents in a Preorder way
+   */
+  private void printPreOrderRec(Node currRoot) {
+    if (currRoot == null) {
+      return;
+    }
+    System.out.print(currRoot.value + ", ");
+    printPreOrderRec(currRoot.left);
+    printPreOrderRec(currRoot.right);
+  }
+  /**
+   * Printing the contents of the tree in a Postorder way.
+   */
+  public void printPostorder() {
+    printPostOrderRec(root);
+    System.out.println("");
+  }
+  /**
+   * Helper method to recursively print the contents in a Postorder way
+   */
+  private void printPostOrderRec(Node currRoot) {
+    if (currRoot == null) {
+      return;
+    }
+    printPostOrderRec(currRoot.left);
+    printPostOrderRec(currRoot.right);
+    System.out.print(currRoot.value + ", ");
+  }
+}
+public class BinarySearchTreeDemo {
+  public static void main(String[] args) {
+    BinarySearchTree bst = new BinarySearchTree();
+    bst .insert(40)
+        .insert(25)
+        .insert(78)
+        .insert(10)
+        .insert(3)
+        .insert(17)
+        .insert(32)
+        .insert(30)
+        .insert(38)
+        .insert(78)
+        .insert(50)
+        .insert(93);
+    System.out.println("Inorder traversal");
+    bst.printInorder();
+    System.out.println("Preorder Traversal");
+    bst.printPreorder();
+    System.out.println("Postorder Traversal");
+    bst.printPostorder();
+    System.out.println("The minimum value in the BST: " + bst.findMinimum());
+    System.out.println("The maximum value in the BST: " + bst.findMaximum());
+  }
+}
